@@ -130,7 +130,21 @@ void TestInsertFifthNode(){
 	//cout << "result: "  << rbt->ToPrefixString() << endl;
 	assert(rbt->ToPrefixString() == " B30  B15  R10  R25  B45 ");
 	delete rbt;
-	
+	//test inserting a duploicate value
+	RedBlackTree *rbt2 = new RedBlackTree();
+	rbt2->Insert(30);
+	rbt2->Insert(15);
+	rbt2->Insert(45);
+	rbt2->Insert(10);
+	bool foundException = false;
+	try{
+	rbt->Insert(10);
+	}catch(invalid_argument& e){
+		foundException = true;
+	}
+	assert(foundException);
+		
+
 	cout << "TESTS MISSING" << endl << endl;
 	
 	cout << "PASSED!" << endl << endl;

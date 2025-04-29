@@ -123,6 +123,10 @@ string RedBlackTree::ToPostfixString(const RBTNode *n){
 //string RedBlackTree::ToPostfixString();
 
 void RedBlackTree::Insert(int newData){
+    if(Contains(newData)){
+        throw invalid_argument("Cannot add duplicate values");
+    }
+
     RBTNode* node = new RBTNode;
     //color red, data = newData
     node->data = newData;
