@@ -1,5 +1,6 @@
 #include "RedBlackTree.h"
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 //COPY CONSTRUCTOR AND PRIVATE FUNCTIONS AND TESTS 
@@ -502,15 +503,32 @@ RBTNode* RedBlackTree::Get(int data) const{
 //test get
 /*
 void TestsInFile(){
-    RedBlackTree *rbt = new RedBlackTree();
+    RedBlackTree* rbt= new RedBlackTree();
+    rbt->Insert(1);
+    rbt->Insert(2);
+    rbt->Insert(3);
+    rbt->Insert(4);
+    rbt->Insert(5);
 
-	rbt = new RedBlackTree();
-	rbt->Insert(1);
-	rbt->Insert(2);
-	rbt->Insert(3);
-	
-    //assert(RedBlackTree::IsLeftChild(1)==true);
-    //assert(IsRightChild(3) == true);
+    //test get
+    RBTNode* node4 = rbt->Get(4);
+    RBTNode* node2=rbt->Get(2);
+    //RBTNode* node
 
+    assert(rbt->IsRightChild(node4) ==true );
+    assert(rbt->IsLeftChild(node4) ==false );
+    assert(rbt->IsLeftChild(node2) == true);
+
+    cout << "PASSED" <<endl;
+
+   
 }
-*/
+int main(){
+    TestsInFile();
+    return 0;
+}
+    */
+
+
+
+

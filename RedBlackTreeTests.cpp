@@ -324,6 +324,7 @@ void TestSize(){
 
 
 
+
 int main(){
 
 	
@@ -344,6 +345,7 @@ int main(){
 	TestContains();
 	TestGetMinimumMaximum();
 	TestSize();
+	//TestsInfile();
 
 	
 	cout << "ALL TESTS PASSED!!" << endl;

@@ -40,6 +40,7 @@ class RedBlackTree {
 		size_t Size() const;
 		int GetMin() const;
 		int GetMax() const;
+		void TestsInFile();
 		
 		
 	
