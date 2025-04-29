@@ -31,7 +31,8 @@ void TestInsertFirstNode(){
 	cout << "Testing Insert One Node..." << endl;
 	RedBlackTree rbt = RedBlackTree();
 	rbt.Insert(30);
-	//cout << "rbt: " << rbt.ToPrefixString() << endl;
+	cout << "rbt: " << rbt.ToPrefixString() << endl;
+	//cout<< rbt.ToInfixString();
 	assert(rbt.ToInfixString() == " B30 ");
 
 	cout << "PASSED!" << endl << endl;

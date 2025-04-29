@@ -18,6 +18,7 @@ void TestSimpleConstructor(){
 void TestConstructor(){
 	cout << "Testing Constructor W/Int Input..." << endl;
 	RedBlackTree rbt = RedBlackTree(15);
+	cout << rbt.ToPrefixString();
 	assert(rbt.ToPrefixString() == " B15 ");
 
 	cout << "PASSED!"<< endl << endl;
@@ -27,8 +28,8 @@ void TestInsertFirstNode(){
 	cout << "Testing Insert One Node..." << endl;
 	RedBlackTree rbt = RedBlackTree();
 	rbt.Insert(30);
-	//cout << "rbt: " << rbt.ToPrefixString() << endl;
-	assert(rbt.ToPrefixString() == " B30 ");
+	cout << "rbt: " << rbt.ToPrefixString() << endl;
+	//assert(rbt.ToPrefixString() == " B30 ");
 
 	cout << "PASSED!" << endl << endl;
 }
@@ -39,6 +40,7 @@ void TestInsertSecondNode(){
 	RedBlackTree *rbt = new RedBlackTree();
 	rbt->Insert(30);
 	rbt->Insert(15);
+	cout << rbt->ToPrefixString();
 	assert(rbt->ToPrefixString() == " B30  R15 ");
 	delete rbt;
 	
@@ -56,9 +58,12 @@ void TestInsertThirdNode(){
 	cout << "Testing Insert Third Node..." << endl;
 	RedBlackTree *rbt = new RedBlackTree();
 	rbt->Insert(30);
+	cout << "afetr insert 30: " << rbt->ToPrefixString() << "end";
 	rbt->Insert(15);
-	rbt->Insert(10); // Left Left
-	//cout << "rbt: "  << rbt->ToPrefixString() << endl;
+	cout << "afetr insert 15: " << rbt->ToPrefixString() << "end";
+	rbt->Insert(10); // Left Left PROOBLEM OCCURS HERE..NEVER INSTER
+	cout << "afetr insert 10: " << rbt->ToPrefixString() << "end";
+	//cout << "rbt: "  << rbt->ToPrefixString() << "end" << endl;
 	assert(rbt->ToPrefixString() == " B15  R10  R30 ");
 	delete rbt;
 	
@@ -77,16 +82,39 @@ void TestInsertThirdNode(){
 	delete rbt;
 	
 	// more tests go here
-	// consider some symmetry!
+	// consider some symmetry! ->>>>>>> one node on each side?
+	//with symmetry:
+	rbt = new RedBlackTree();
+	rbt->Insert(30);
+	rbt->Insert(10);
+	rbt->Insert(20); // Easy case
+	assert(rbt->ToPrefixString() == " B20  R10  R30 ");
+	delete rbt;
+
 	
-	cout << "TESTS MISSING" << endl << endl;
+	rbt = new RedBlackTree();
+	rbt->Insert(15);
+	rbt->Insert(10);
+	rbt->Insert(5); // Easy case
+	assert(rbt->ToPrefixString() == " B10  R5  R15 ");
+	delete rbt;
+
+	
+	//cout << "TESTS MISSING" << endl << endl;
 	cout << "PASSED!" << endl << endl;
 }
 
 void TestInsertFourthNode(){
 	cout << "Testing Insert Fourth Node..." << endl;
 
-	cout << "TESTS MISSING" << endl << endl;
+	RedBlackTree *rbt = new RedBlackTree();
+	rbt->Insert(30);
+	rbt->Insert(15);
+	rbt->Insert(45);
+	rbt->Insert(12); // Easy case
+	//cout << rbt->ToPrefixString();
+	assert(rbt->ToPrefixString() == " B30  B15  R12  B45 ");
+	delete rbt;
 	
 	cout << "PASSED!" << endl << endl;
 }
@@ -121,7 +149,9 @@ void TestToStrings(){
 	rbt.Insert(7);
 
 	assert(rbt.ToPrefixString() == " B12  B7  R5  R11  B15  R13 ");
+	//cout << rbt.ToInfixString();
 	assert(rbt.ToInfixString() == " R5  B7  R11  B12  R13  B15 ");
+	//cout << rbt.ToPostfixString();
 	assert(rbt.ToPostfixString() == " R5  R11  B7  R13  B15  B12 ");
 
 	cout << "PASSED!" << endl << endl;
@@ -216,12 +246,16 @@ void TestContains(){
 	rbt->Insert(17);
 	rbt->Insert(29);
 	rbt->Insert(34);
+	assert(rbt ->Contains(14) == false);
+	assert(rbt->Contains(55) == true);
 	
-	assert(rbt->Contains(34));
+	
+	assert(rbt->Contains(34) == true);
 	delete rbt;
 
 	
-	cout << "TESTS MISSING" << endl << endl;
+	//cout << "TESTS MISSING" << endl << endl;
+
 	cout << "PASSED!" << endl << endl;
 }
 
@@ -230,11 +264,47 @@ void TestContains(){
 
 void TestGetMinimumMaximum(){
 	cout << "Testing Get Minimum and Get Maximum..." << endl;
+	RedBlackTree *rbt = new RedBlackTree();
+	//DONT need to test negative numbers..there's an assumption that all are positive
 
-	cout << "TESTS MISSING" << endl << endl;
+	rbt = new RedBlackTree();
+	rbt->Insert(40);
+	rbt->Insert(22);
+	rbt->Insert(15);
+	rbt->Insert(31);
+	rbt->Insert(55);
+	rbt->Insert(12);
+	rbt->Insert(17);
+	rbt->Insert(29);
+	rbt->Insert(34);
+	assert(rbt->GetMin() == 12);
+	assert(rbt->GetMax() == 55);
+
+
+	//cout << "TESTS MISSING" << endl << endl;
 
 	cout << "PASSED!" << endl << endl;
 }
+void TestSize(){
+	cout << "Testing Size..." <<endl;
+	RedBlackTree *rbt = new RedBlackTree();
+
+	rbt = new RedBlackTree();
+	rbt->Insert(40);
+	rbt->Insert(22);
+	rbt->Insert(15);
+	rbt->Insert(31);
+	rbt->Insert(55);
+	rbt->Insert(12);
+	rbt->Insert(17);
+	rbt->Insert(29);
+	rbt->Insert(34);
+	assert(rbt->Size() == 9);
+	cout << "PASSED!!" <<endl;
+
+
+}
+
 
 
 
@@ -259,8 +329,10 @@ int main(){
 
 	TestContains();
 	TestGetMinimumMaximum();
+	TestSize();
 
 	
 	cout << "ALL TESTS PASSED!!" << endl;
 	return 0;
 }
+

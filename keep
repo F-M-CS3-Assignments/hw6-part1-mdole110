@@ -1,0 +1,96 @@
+void RedBlackTree::InsertFixUp(RBTNode *newNode){
+    while(newNode != root && newNode->parent->color == COLOR_RED){
+
+    if(newNode->parent->color != COLOR_RED){
+        cout << "Node's parent is not red." <<endl;
+        return;
+    }
+    cout << "FIX UP CALLED AND RUNNING" << endl;
+    //uncle parend and grand parent
+
+    if(newNode == nullptr || newNode->parent == nullptr){
+        cout << "either new Node or parent of newNode is null...returning" << endl;
+        return;
+    }
+    
+    RBTNode *parentNode = newNode->parent;
+    RBTNode *uncleNode = GetUncle(newNode);
+    if(parentNode==nullptr || parentNode ->parent == nullptr){
+        cout << "either parent node or parent of parent node is null" << endl;
+        return;
+    }
+    RBTNode *GPNode = newNode->parent->parent;
+
+    if(GPNode == nullptr){
+        cout << "GPNOde is null...returning" << endl;
+        return;
+    }
+
+    if(uncleNode == nullptr || uncleNode->color == COLOR_BLACK){ //if uncle is black and nullptr counts as black 
+        //nullptr should also count as black
+
+        //parentNode ->color = COLOR_BLACK;//change oarent and uncle to black
+        //uncleNode->color = COLOR_BLACK;
+        //GPNode -> color = COLOR_RED; //change gp to red (below...with check)
+        cout << "Uncle is null or black" << endl;
+
+
+        if(GPNode!=nullptr){
+            cout << "GPNode !=null...changing color to red " << endl;
+            GPNode->color = COLOR_RED;
+        }
+        if(IsLeftChild(newNode) && IsLeftChild(parentNode)){
+            cout << "new node is left child and parent node is left child" << endl;
+            RightRotate(GPNode);
+            parentNode->color = COLOR_BLACK;
+        }
+        else if(IsRightChild(newNode)&&IsRightChild(parentNode)){
+            cout << "new node is right child and parent node is right child" << endl;
+            LeftRotate(GPNode);
+            parentNode->color = COLOR_BLACK;
+        }
+        else if(IsLeftChild(newNode)&&IsRightChild(parentNode)){
+            cout << "new node is left child, parent  node is right child" << endl;
+            RightRotate(parentNode);
+            LeftRotate(GPNode);
+            newNode->color = COLOR_BLACK;
+            parentNode->color = COLOR_RED;
+        }
+        else if(IsRightChild(newNode) && IsLeftChild(parentNode)){
+            cout << " new node is right child, parent node is left child." <<endl;
+            LeftRotate(parentNode);
+            cout << "left rotate completed" << endl;
+            RightRotate(GPNode);
+            cout << "right rotate completed " << endl;
+            newNode->color = COLOR_BLACK;
+            cout << newNode->color << endl; //complete and correct
+            parentNode->color = COLOR_RED;
+            cout << parentNode->color << endl; //complete and correct
+        }
+        else{
+            throw invalid_argument("impossible state!");
+        }
+    }
+    else if(uncleNode != nullptr && uncleNode->color == COLOR_RED){
+        //for when uncle is red
+        cout << "IN THE ELSE IF CONDIITON" << endl;
+        parentNode->color = COLOR_BLACK;
+        uncleNode ->color = COLOR_BLACK;
+
+        if(GPNode != nullptr){
+            //GPNode ->color = COLOR_RED;
+    
+         if(root!=GPNode){
+            GPNode ->color = COLOR_RED;
+                if(GPNode->parent != nullptr){
+                    if(GPNode ->parent->color == COLOR_RED){
+                    //cout << "Inserting node: " + newNode->data << ", Parent: " <<  newNode ->parent->data << endl; 
+                    InsertFixUp(GPNode);//recall
+                    }
+                }
+            }
+            
+            }}
+        root->color = COLOR_BLACK;
+        }
+    }
